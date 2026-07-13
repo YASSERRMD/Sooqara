@@ -58,9 +58,14 @@ func TestTooFewSettingsReducesLifestyleSettings(t *testing.T) {
 		SuggestedLifestyleSettings: []string{"one", "two", "three", "four"},
 	}
 	resp := TooFewSettings(a)
-	_ = resp
-	if len(a.SuggestedLifestyleSettings) != 1 {
-		t.Errorf("expected settings reduced to 1, got %d", len(a.SuggestedLifestyleSettings))
+	content := resp.Choices[0].Message.Content
+	// The response should have only 1 setting
+	var parsed struct {
+		Lifestyle []string `json:"suggested_lifestyle_settings"`
+	}
+	json.Unmarshal([]byte(content), &parsed)
+	if len(parsed.Lifestyle) != 1 {
+		t.Errorf("expected 1 lifestyle setting in response, got %d", len(parsed.Lifestyle))
 	}
 }
 
