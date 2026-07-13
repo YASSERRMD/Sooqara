@@ -69,8 +69,8 @@ func TestWriteJSON(t *testing.T) {
 func TestSlugify(t *testing.T) {
 	tests := []struct{ in, want string }{
 		{"Hello World", "hello-world"},
-		{"UPPER CASE", "upper case"},
-		{"Mixed Case", "mixed case"},
+		{"UPPER CASE", "upper-case"},
+		{"Mixed Case", "mixed-case"},
 	}
 	for _, tt := range tests {
 		got := slugify(tt.in)
