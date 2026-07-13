@@ -8,8 +8,8 @@ import (
 func TestLoadDefaults(t *testing.T) {
 	os.Clearenv()
 	c := Load()
-	if c.AgenesBaseURL != "https://apihub.agnes-ai.com/v1" {
-		t.Errorf("base URL = %s, want default", c.AgenesBaseURL)
+	if c.AgnesBaseURL != "https://apihub.agnes-ai.com/v1" {
+		t.Errorf("base URL = %s, want default", c.AgnesBaseURL)
 	}
 	if c.RPM != 18 {
 		t.Errorf("RPM = %d, want 18", c.RPM)
