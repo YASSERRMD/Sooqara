@@ -18,6 +18,12 @@ func TestAnalyseValidJSON(t *testing.T) {
 	blob := store.NewFilesystemBlob(filepath.Join(tmpDir, "storage"))
 	s := store.NewStore(db, blob)
 
+	// Create the job first so FK constraint passes
+	hint := "test"
+	job := store.NewJob("/source.jpg", hint, "", 4)
+	job.ID = "job-1"
+	store.CreateJob(db, job)
+
 	sourcePath := filepath.Join(tmpDir, "source.jpg")
 	os.WriteFile(sourcePath, []byte("fake image"), 0644)
 
@@ -57,6 +63,11 @@ func TestAnalyseFenceWrappedJSON(t *testing.T) {
 	defer db.Close()
 	blob := store.NewFilesystemBlob(filepath.Join(tmpDir, "storage"))
 	s := store.NewStore(db, blob)
+
+	hint := "test"
+	job := store.NewJob("/source.jpg", hint, "", 4)
+	job.ID = "job-2"
+	store.CreateJob(db, job)
 
 	sourcePath := filepath.Join(tmpDir, "source.jpg")
 	os.WriteFile(sourcePath, []byte("fake image"), 0644)
@@ -101,6 +112,11 @@ func TestAnalyseMalformedNeverRepairs(t *testing.T) {
 	blob := store.NewFilesystemBlob(filepath.Join(tmpDir, "storage"))
 	s := store.NewStore(db, blob)
 
+	hint := "test"
+	job := store.NewJob("/source.jpg", hint, "", 4)
+	job.ID = "job-3"
+	store.CreateJob(db, job)
+
 	sourcePath := filepath.Join(tmpDir, "source.jpg")
 	os.WriteFile(sourcePath, []byte("fake image"), 0644)
 
@@ -123,6 +139,11 @@ func TestAnalyseTooFewSettings(t *testing.T) {
 	defer db.Close()
 	blob := store.NewFilesystemBlob(filepath.Join(tmpDir, "storage"))
 	s := store.NewStore(db, blob)
+
+	hint := "test"
+	job := store.NewJob("/source.jpg", hint, "", 4)
+	job.ID = "job-4"
+	store.CreateJob(db, job)
 
 	sourcePath := filepath.Join(tmpDir, "source.jpg")
 	os.WriteFile(sourcePath, []byte("fake image"), 0644)
