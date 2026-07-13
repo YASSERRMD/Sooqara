@@ -1,7 +1,6 @@
 package export
 
 import (
-	"strings"
 	"testing"
 )
 

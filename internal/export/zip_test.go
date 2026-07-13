@@ -3,7 +3,6 @@ package export
 import (
 	"bytes"
 	"archive/zip"
-	"io"
 	"testing"
 )
 
