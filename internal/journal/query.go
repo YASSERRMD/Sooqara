@@ -3,7 +3,6 @@ package journal
 import (
 	"context"
 	"database/sql"
-	"fmt"
 )
 
 // Query returns journal entries matching the filter.
