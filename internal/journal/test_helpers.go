@@ -2,7 +2,6 @@ package journal
 
 import (
 	"database/sql"
-	"os"
 	"path/filepath"
 	"testing"
 )
