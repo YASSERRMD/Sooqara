@@ -2,7 +2,6 @@ package export
 
 import (
 	"bytes"
-	"io"
 	"testing"
 )
 
