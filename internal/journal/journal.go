@@ -1,8 +1,10 @@
 package journal
 
 import (
+	"context"
 	"database/sql"
 	"fmt"
+	"sync"
 
 	_ "modernc.org/sqlite"
 )
