@@ -10,12 +10,11 @@ import (
 	"strings"
 
 	"github.com/yasserrmd/sooqara/internal/provider"
-	"github.com/yasserrmd/sooqara/internal/provider/agnes"
 	"github.com/yasserrmd/sooqara/internal/store"
 )
 
 // Analyse runs vision analysis on the source image.
-func Analyse(ctx context.Context, client *agnes.Client, s *store.Store, jobID, sourceImagePath string, variantCount int) (*store.Artifact, error) {
+func Analyse(ctx context.Context, p provider.Provider, s *store.Store, jobID, sourceImagePath string, variantCount int) (*store.Artifact, error) {
 	systemPrompt := `Return ONLY a JSON object. No prose. No markdown fences. No commentary.
 
 Target schema:
@@ -74,7 +73,7 @@ Target schema:
 
 func runWithRepair(ctx context.Context, client *agnes.Client, req provider.ChatRequest, variantCount int, systemPrompt string) (*ProductAnalysis, error) {
 	for attempt := 0; attempt <= 1; attempt++ {
-		resp, err := client.Chat(ctx, req)
+		resp, err := p.Chat(ctx, req)
 		if err != nil {
 			return nil, fmt.Errorf("chat call (attempt %d): %w", attempt+1, err)
 		}
