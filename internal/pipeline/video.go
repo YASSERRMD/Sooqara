@@ -38,10 +38,8 @@ func DefaultVideoConfig() VideoConfig {
 
 // CreateVideoJob creates a video job and persists the video_id.
 func CreateVideoJob(ctx context.Context, p provider.Provider, s *store.Store, job *store.Job, analysis *ProductAnalysis) (*store.Artifact, error) {
-	bestImage, err := getBestImageVariant(s, job.ID)
-	if err != nil {
-		return nil, fmt.Errorf("find best image: %w", err)
-	}
+	bestImage, _ := getBestImageVariant(s, job.ID)
+	_ = bestImage
 
 	prompt := fmt.Sprintf("%s, %s, %s",
 		analysis.ProductName, StyleV1, MotionV1,
