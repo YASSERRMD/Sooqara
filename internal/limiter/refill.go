@@ -1,7 +1,5 @@
 package limiter
 
-import "time"
-
 // refillLocked adds tokens based on elapsed time. Caller must hold l.mu.
 func (l *Limiter) refillLocked() {
 	now := l.clock.Now()
