@@ -1,6 +1,9 @@
 package observability
 
-import "sync"
+import (
+	"sync"
+	"testing"
+)
 
 func TestMetricsConcurrencySafety(t *testing.T) {
 	m := NewMetrics()

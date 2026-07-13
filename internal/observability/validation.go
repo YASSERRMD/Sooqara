@@ -3,7 +3,6 @@ package observability
 import (
 	"errors"
 	"strings"
-	"time"
 )
 
 // ErrInvalidCostEntry is returned when a CostEntry fails validation.
