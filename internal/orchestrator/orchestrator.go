@@ -70,7 +70,10 @@ func (o *Orchestrator) Run(ctx context.Context) error {
 	<-ctx.Done()
 	o.stopWorkers(ctx)
 	poller.Stop()
-	return o.journal.Flush(ctx)
+	if o.journal != nil {
+		o.journal.Flush(ctx)
+	}
+	return nil
 }
 
 func (o *Orchestrator) worker(ctx context.Context, id int) {
