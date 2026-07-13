@@ -2,7 +2,6 @@ package journal
 
 import (
 	"context"
-	"fmt"
 )
 
 func (j *Journal) writer() {
