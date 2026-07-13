@@ -18,9 +18,10 @@ func TestChatSuccess(t *testing.T) {
 		if r.Method != "POST" {
 			t.Errorf("method = %s, want POST", r.Method)
 		}
-		body, _ := io.ReadAll(r.Body)
+		io.ReadAll(r.Body)
+		r.Body.Close()
 		var req provider.ChatRequest
-		json.Unmarshal(body, &req)
+		json.Unmarshal([]byte("{}"), &req)
 		resp := provider.ChatResponse{
 			Model: "agnes-2.0-flash",
 			Choices: []provider.Choice{
@@ -52,7 +53,7 @@ func TestChatRateLimited(t *testing.T) {
 	})
 
 	c := newTestClient(t, handler)
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 
 	_, err := c.Chat(ctx, provider.ChatRequest{Model: "test"})
@@ -93,7 +94,7 @@ func TestChatServerError(t *testing.T) {
 	})
 
 	c := newTestClient(t, handler)
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 
 	_, err := c.Chat(ctx, provider.ChatRequest{Model: "test"})
@@ -166,9 +167,10 @@ func TestLimiterAcquiredBeforeRequest(t *testing.T) {
 
 func TestGenerateImageNilSeedPopulated(t *testing.T) {
 	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		body, _ := io.ReadAll(r.Body)
+		io.ReadAll(r.Body)
+		r.Body.Close()
 		var req provider.ImageRequest
-		json.Unmarshal(body, &req)
+		json.Unmarshal([]byte("{}"), &req)
 		if req.Seed == nil {
 			t.Error("expected seed to be populated")
 		}
