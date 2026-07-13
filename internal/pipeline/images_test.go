@@ -2,7 +2,6 @@ package pipeline
 
 import (
 	"context"
-	"fmt"
 	"testing"
 
 	"github.com/yasserrmd/sooqara/internal/provider"
