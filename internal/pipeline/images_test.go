@@ -10,6 +10,8 @@ import (
 )
 
 func ptrInt64(i int64) *int64 { return &i }
+
+func TestGenerateVariantsBasic(t *testing.T) {
 	tmpDir := t.TempDir()
 	dbPath := tmpDir + "/test.db"
 	db, _ := store.Open(dbPath)
