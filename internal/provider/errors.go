@@ -15,6 +15,16 @@ func IsRateLimited(err error) bool {
 	return errors.Is(err, ErrRateLimited)
 }
 
+// IsAuth checks if the error is an authentication error.
+func IsAuth(err error) bool {
+	return errors.Is(err, ErrAuth)
+}
+
+// IsBadRequest checks if the error is a bad request error.
+func IsBadRequest(err error) bool {
+	return errors.Is(err, ErrBadRequest)
+}
+
 // IsProviderUnavailable checks if the error is a provider unavailable error.
 func IsProviderUnavailable(err error) bool {
 	return errors.Is(err, ErrProviderUnavailable)
