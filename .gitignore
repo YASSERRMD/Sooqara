@@ -1,0 +1,24 @@
+# Build
+bin/
+*.exe
+
+# Databases
+*.db
+*.db-wal
+*.db-shm
+
+# Environment
+.env
+
+# Storage and dist
+storage/
+tmp/
+dist/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Docs
+*.md
