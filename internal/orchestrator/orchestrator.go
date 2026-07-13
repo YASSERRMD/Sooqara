@@ -84,7 +84,7 @@ func (o *Orchestrator) worker(ctx context.Context, id int) {
 		default:
 		}
 
-		job, err := o.store.ClaimNext(ctx, []store.State{
+		job, err := store.ClaimNext(o.store.DB, []store.State{
 			store.StateQueued, store.StateAnalysing,
 			store.StateCopywriting, store.StateImaging,
 			store.StateAssembling,
