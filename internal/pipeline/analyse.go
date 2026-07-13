@@ -52,7 +52,7 @@ Target schema:
 		Messages: []provider.ChatMessage{{Role: "user", Content: contentParts}},
 	}
 
-	analysis, err := runWithRepair(ctx, client, req, variantCount, systemPrompt)
+	analysis, err := runWithRepair(ctx, p, req, variantCount, systemPrompt)
 	if err != nil {
 		return nil, err
 	}
@@ -71,7 +71,7 @@ Target schema:
 	return a, nil
 }
 
-func runWithRepair(ctx context.Context, client *agnes.Client, req provider.ChatRequest, variantCount int, systemPrompt string) (*ProductAnalysis, error) {
+func runWithRepair(ctx context.Context, p provider.Provider, req provider.ChatRequest, variantCount int, systemPrompt string) (*ProductAnalysis, error) {
 	for attempt := 0; attempt <= 1; attempt++ {
 		resp, err := p.Chat(ctx, req)
 		if err != nil {
