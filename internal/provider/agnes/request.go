@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/yasserrmd/sooqara/internal/journal"
 	"github.com/yasserrmd/sooqara/internal/provider"
 )
 
@@ -34,46 +35,37 @@ func (c *Client) doRequest(ctx context.Context, method, url string, body any, ki
 	attempts := 0
 	maxAttempts := 4
 
+	logActivity := func(outcome, detail string) {
+		c.journal.Record(ctx, journal.Activity{
+			Kind:        kind,
+			Outcome:     outcome,
+			Detail:      detail,
+			LatencyMs:   time.Since(start).Milliseconds(),
+			Ts:          time.Now().UnixMilli(),
+		})
+	}
+
 	for {
 		if err := c.limiter.Acquire(ctx); err != nil {
-			c.journal.Record(ctx, journal.Activity{
-				Kind:        kind,
-				Outcome:     "error",
-				Detail:      fmt.Sprintf("limiter acquire failed: %v", err),
-				LatencyMs:   time.Since(start).Milliseconds(),
-			})
+			logActivity("error", fmt.Sprintf("limiter acquire failed: %v", err))
 			return nil, err
 		}
 
 		attempts++
 		resp, err := c.httpClient.Do(req)
 		if err != nil {
-			c.journal.Record(ctx, journal.Activity{
-				Kind:        kind,
-				Outcome:     "error",
-				Detail:      fmt.Sprintf("request failed attempt %d: %v", attempts, err),
-				LatencyMs:   time.Since(start).Milliseconds(),
-			})
+			logActivity("error", fmt.Sprintf("request failed attempt %d: %v", attempts, err))
 			return nil, fmt.Errorf("request attempt %d: %w", attempts, err)
 		}
 		defer resp.Body.Close()
 
 		switch resp.StatusCode {
 		case http.StatusOK:
-			c.journal.Record(ctx, journal.Activity{
-				Kind:        kind,
-				Outcome:     "ok",
-				LatencyMs:   time.Since(start).Milliseconds(),
-			})
+			logActivity("ok", "")
 			return resp, nil
 		case http.StatusTooManyRequests:
 			if attempts >= maxAttempts {
-				c.journal.Record(ctx, journal.Activity{
-					Kind:        kind,
-					Outcome:     "rate_limited",
-					Detail:      fmt.Sprintf("max retries (%d) exceeded", maxAttempts),
-					LatencyMs:   time.Since(start).Milliseconds(),
-				})
+				logActivity("rate_limited", fmt.Sprintf("max retries (%d) exceeded", maxAttempts))
 				return nil, provider.ErrRateLimited
 			}
 			backoff := time.Duration(1<<uint(attempts-1)) * time.Second
@@ -81,32 +73,17 @@ func (c *Client) doRequest(ctx context.Context, method, url string, body any, ki
 			continue
 		case http.StatusInternalServerError, http.StatusBadGateway, http.StatusServiceUnavailable:
 			if attempts >= maxAttempts {
-				c.journal.Record(ctx, journal.Activity{
-					Kind:        kind,
-					Outcome:     "error",
-					Detail:      fmt.Sprintf("server error after %d attempts", attempts),
-					LatencyMs:   time.Since(start).Milliseconds(),
-				})
+				logActivity("error", fmt.Sprintf("server error after %d attempts", attempts))
 				return nil, provider.ErrProviderUnavailable
 			}
 			backoff := time.Duration(1<<uint(attempts-1)) * time.Second
 			time.Sleep(backoff)
 			continue
 		case http.StatusUnauthorized:
-			c.journal.Record(ctx, journal.Activity{
-				Kind:        kind,
-				Outcome:     "error",
-				Detail:      "authentication failed",
-				LatencyMs:   time.Since(start).Milliseconds(),
-			})
+			logActivity("error", "authentication failed")
 			return nil, provider.ErrAuth
 		default:
-			c.journal.Record(ctx, journal.Activity{
-				Kind:        kind,
-				Outcome:     "error",
-				Detail:      fmt.Sprintf("unexpected status: %d", resp.StatusCode),
-				LatencyMs:   time.Since(start).Milliseconds(),
-			})
+			logActivity("error", fmt.Sprintf("unexpected status: %d", resp.StatusCode))
 			return nil, provider.ErrBadRequest
 		}
 	}
