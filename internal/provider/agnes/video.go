@@ -1,7 +1,6 @@
 package agnes
 
 import (
-	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
