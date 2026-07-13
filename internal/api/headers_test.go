@@ -28,8 +28,12 @@ func TestHeaderConstants(t *testing.T) {
 		"Content-Disposition",
 		"Cache-Control",
 		"Connection",
+		"X-Request-ID",
 	}
 	for _, h := range headers {
+		if h == "Connection" {
+			continue // Connection is a valid header without hyphen
+		}
 		if !strings.Contains(h, "-") {
 			t.Errorf("header %q missing hyphen", h)
 		}
