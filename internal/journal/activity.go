@@ -1,7 +1,6 @@
 package journal
 
 import (
-	"context"
 	"crypto/rand"
 	"encoding/hex"
 	"time"
