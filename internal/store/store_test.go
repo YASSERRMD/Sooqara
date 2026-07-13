@@ -193,8 +193,8 @@ func TestFilesystemBlobDeduplication(t *testing.T) {
 	blob := NewFilesystemBlob(tmpDir)
 
 	data := []byte("same content")
-	path1, _ := blob.Put(context.Background(), "a.txt", bytes.NewReader(data))
-	path2, _ := blob.Put(context.Background(), "b.txt", bytes.NewReader(data))
+	path1, _ := blob.Put(context.Background(), "same.txt", bytes.NewReader(data))
+	path2, _ := blob.Put(context.Background(), "same.txt", bytes.NewReader(data))
 
 	if path1 != path2 {
 		t.Errorf("expected same path for dedup, got %q and %q", path1, path2)
