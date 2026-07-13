@@ -8,6 +8,8 @@ import (
 	"io"
 	"net/http"
 	"time"
+
+	"github.com/yasserrmd/sooqara/internal/provider"
 )
 
 // doRequest executes an HTTP request with limiter acquisition and retry logic.
