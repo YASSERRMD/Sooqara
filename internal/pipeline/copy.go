@@ -100,7 +100,7 @@ func runCopyWithRepair(ctx context.Context, p provider.Provider, req provider.Ch
 		if len(msg.ToolCalls) > 0 {
 			tc := msg.ToolCalls[0]
 			var cs CopySet
-			if err := json.Unmarshal(tc.Function.Arguments, &cs); err != nil {
+			if err := json.Unmarshal([]byte(tc.Function.Arguments), &cs); err != nil {
 				return nil, fmt.Errorf("parse tool call: %w", err)
 			}
 			cs.Tone = tone
