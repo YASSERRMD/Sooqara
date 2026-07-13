@@ -29,8 +29,8 @@ func TestLoadOverrides(t *testing.T) {
 	defer os.Clearenv()
 
 	c := Load()
-	if c.AgenesAPIKey != "my-key" {
-		t.Errorf("API key = %s, want my-key", c.AgenesAPIKey)
+	if c.AgnesAPIKey != "my-key" {
+		t.Errorf("API key = %s, want my-key", c.AgnesAPIKey)
 	}
 	if c.RPM != 60 {
 		t.Errorf("RPM = %d, want 60", c.RPM)
