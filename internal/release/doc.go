@@ -1,12 +1,16 @@
-// Package release provides build-time version injection, changelog formatting,
-// and release metadata for Sooqara.
+// Package release provides end-to-end release tooling for Sooqara.
 //
-// Key functions:
+// Functions:
 //   - GenerateBuildFlags: produces -ldflags for go build
-//   - FormatChangelog: renders ChangelogEntry slices to markdown
-//   - Metadata.String: formats release information
+//   - WriteManifest / ReadManifest: JSON serialization of PackageInfo
+//   - PrepareReleaseDir / CopyArtifact / ListArtifacts: staging helpers
+//   - PackTarball: creates .tar.gz archives
+//   - CheckEnvironment: validates build prerequisites
+//   - GenerateReleaseNote: renders GitHub release notes
+//   - RunRelease: orchestrates the full release workflow
+//   - SHA256Checksum: verifies artifact integrity
 //
-// Example build command:
+// Usage:
 //
-//	go build -ldflags "$(go run internal/release/build_flags.go)" -o bin/sooqara ./cmd/sooqara
+//	release.RunRelease(".", "v1.0.0", commitHash)
 package release
