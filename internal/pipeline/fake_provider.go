@@ -45,14 +45,6 @@ func (f *FakeProvider) PollVideo(ctx context.Context, videoID string) (provider.
 
 func (f *FakeProvider) Name() string { return "fake" }
 
-// Wrap converts FakeProvider to *agnes.Client for testing Analyse.
-func WrapFake(client *agnes.Client, fake *FakeProvider) *agnes.Client {
-	// We need to replace the client's internal behavior.
-	// Instead, just use the fake directly in tests.
-	_ = client
-	return client
-}
-
 // ValidJSON returns a ChatResponse with valid analysis JSON.
 func ValidJSON(analysis ProductAnalysis) provider.ChatResponse {
 	data, _ := jsonMarshal(analysis)
