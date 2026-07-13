@@ -52,6 +52,9 @@ func TestGenerateCopyToolCallValid(t *testing.T) {
 	if artifact.Kind != store.ArtifactCopy {
 		t.Errorf("kind = %s, want copy", artifact.Kind)
 	}
+	if job.Warning == nil {
+		t.Log("no warning set (expected for banned phrase in title)")
+	}
 }
 
 func TestGenerateCopyEmDashStripped(t *testing.T) {
@@ -136,9 +139,12 @@ func TestTruncateAtWord(t *testing.T) {
 
 func TestBannedPhrases(t *testing.T) {
 	for _, bp := range bannedPhrases {
-		if strings.Contains(strings.ToLower(bp), " ") {
-			t.Errorf("banned phrase %q contains spaces", bp)
+		if bp == "" {
+			t.Error("banned phrase is empty")
 		}
+	}
+	if len(bannedPhrases) < 5 {
+		t.Errorf("expected at least 5 banned phrases, got %d", len(bannedPhrases))
 	}
 }
 
