@@ -63,7 +63,8 @@ Target schema:
 
 	payload, _ := json.Marshal(analysis)
 	a := store.NewArtifact(jobID, store.ArtifactAnalysis, 0)
-	a.Payload = strPtr(string(payload))
+	payloadStr := string(payload)
+	a.Payload = &payloadStr
 	if err := store.CreateArtifact(s.DB, a); err != nil {
 		return nil, fmt.Errorf("persist analysis artifact: %w", err)
 	}
