@@ -2,7 +2,6 @@ package journal
 
 import (
 	"context"
-	"database/sql"
 	"fmt"
 )
 
