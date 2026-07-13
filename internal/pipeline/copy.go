@@ -157,7 +157,7 @@ func enforceConstraints(cs *CopySet, warning *string) error {
 
 	if len(warnings) > 0 {
 		w := strings.Join(warnings, "; ")
-		*warning = &w
+		*warning = w
 	}
 
 	return nil
