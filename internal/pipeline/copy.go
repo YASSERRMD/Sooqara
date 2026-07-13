@@ -69,9 +69,12 @@ func GenerateCopy(ctx context.Context, p provider.Provider, s *store.Store, job 
 	}
 
 	// Enforce constraints in Go.
-	if err := enforceConstraints(copySet, job.Warning); err != nil {
-		// Warning is set on the job later
+	var warning string
+	if err := enforceConstraints(copySet, &warning); err != nil {
 		_ = err
+	}
+	if warning != "" {
+		job.Warning = &warning
 	}
 
 	// Persist
