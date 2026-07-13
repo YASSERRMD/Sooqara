@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"os"
 	"strconv"
-	"time"
 )
 
 // Config holds all application settings loaded from environment variables.
@@ -71,9 +70,6 @@ func (c Config) Validate() error {
 	}
 	if c.LogLevel == "" {
 		errs = append(errs, fmt.Errorf("SOOQARA_LOG_LEVEL is required"))
-	}
-	if _, err := time.ParseDuration("0s"); err != nil {
-		errs = append(errs, fmt.Errorf("invalid log level %q", c.LogLevel))
 	}
 	if len(errs) > 0 {
 		return errors.Join(errs...)
