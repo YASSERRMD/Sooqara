@@ -57,9 +57,10 @@ func TestTooFewSettingsReducesLifestyleSettings(t *testing.T) {
 		ShapeDescription:   "D",
 		SuggestedLifestyleSettings: []string{"one", "two", "three", "four"},
 	}
-	TooFewSettings(a)
-	if len(a.SuggestedLifestyleSettings) >= 4 {
-		t.Error("expected settings reduced to 1")
+	resp := TooFewSettings(a)
+	_ = resp
+	if len(a.SuggestedLifestyleSettings) != 1 {
+		t.Errorf("expected settings reduced to 1, got %d", len(a.SuggestedLifestyleSettings))
 	}
 }
 
@@ -175,7 +176,11 @@ func TestCancelTerminalJobFails(t *testing.T) {
 	store.CreateJob(s.DB, job)
 
 	store.Transition(s.DB, job.ID, store.StateQueued, store.StateAnalysing)
-	store.Transition(s.DB, job.ID, store.StateAnalysing, store.StateDone)
+	store.Transition(s.DB, job.ID, store.StateAnalysing, store.StateCopywriting)
+	store.Transition(s.DB, job.ID, store.StateCopywriting, store.StateImaging)
+	store.Transition(s.DB, job.ID, store.StateImaging, store.StateVideoing)
+	store.Transition(s.DB, job.ID, store.StateVideoing, store.StateAssembling)
+	store.Transition(s.DB, job.ID, store.StateAssembling, store.StateDone)
 
 	err := store.CancelJob(s.DB, job.ID)
 	if err == nil {
