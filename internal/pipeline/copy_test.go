@@ -3,7 +3,6 @@ package pipeline
 import (
 	"context"
 	"path/filepath"
-	"strings"
 	"testing"
 
 	"github.com/yasserrmd/sooqara/internal/provider"
