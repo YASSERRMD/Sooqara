@@ -1,8 +1,8 @@
 package export
 
 import (
-	"archive/zip"
 	"bytes"
+	"archive/zip"
 	"io"
 	"testing"
 )
@@ -25,7 +25,7 @@ func TestZipRead(t *testing.T) {
 	f.Write([]byte("hello world"))
 	zw.Close()
 
- zr, _ := zip.NewReader(&buf, int64(buf.Len()))
+ zr, _ := zip.NewReader(bytes.NewReader(buf.Bytes()), int64(buf.Len()))
  if len(zr.File) == 0 {
   t.Fatal("expected at least 1 file in ZIP")
  }
