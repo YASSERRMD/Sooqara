@@ -31,16 +31,23 @@ func TestStageTimeouts(t *testing.T) {
 }
 
 func TestStageNames(t *testing.T) {
-	names := map[string]bool{
-		"analyse": false, "copy": false, "image": false,
-		"video": false, "assemble": false, "noop": false,
+	names := make(map[string]bool)
+	for _, name := range []string{"analyse", "copy", "image", "video", "assemble", "noop"} {
+		names[name] = false
 	}
 	stages := []Stage{&analyseStage{}, &copyStage{}, &imageStage{}, &videoStage{}, &assembleStage{}, &noopStage{}}
+	seen := make(map[string]bool)
 	for _, s := range stages {
-		if !names[s.Name()] {
-			t.Errorf("unknown stage name: %s", s.Name())
+		seen[s.Name()] = true
+	}
+	expected := map[string]bool{
+		"analyse": true, "copy": true, "image": true,
+		"video": true, "assemble": true, "noop": true,
+	}
+	for name := range expected {
+		if !seen[name] {
+			t.Errorf("missing stage name: %s", name)
 		}
-		names[s.Name()] = true
 	}
 }
 
