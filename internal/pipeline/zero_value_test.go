@@ -13,7 +13,7 @@ func TestProductAnalysisZeroValue(t *testing.T) {
 
 func TestPhotoQualityZeroValue(t *testing.T) {
 	var pq PhotoQuality
-	if pq.Lightning != "" {
+	if pq.Background != "" {
 		t.Error("zero-value PhotoQuality fields should be empty")
 	}
 }
