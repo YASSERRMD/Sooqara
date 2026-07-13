@@ -27,6 +27,11 @@ func TestCreateVideoJobPersistsVideoID(t *testing.T) {
 	a.Path = &imgPath
 	store.CreateArtifact(s.DB, a)
 
+	// Set job to imaging state first
+	store.Transition(s.DB, job.ID, store.StateQueued, store.StateAnalysing)
+	store.Transition(s.DB, job.ID, store.StateAnalysing, store.StateCopywriting)
+	store.Transition(s.DB, job.ID, store.StateCopywriting, store.StateImaging)
+
 	analysis := &ProductAnalysis{ProductName: "X", Category: "C", ShapeDescription: "D"}
 
 	fake := &FakeProvider{
