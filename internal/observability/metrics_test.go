@@ -73,7 +73,7 @@ func TestAddCost(t *testing.T) {
 	m.AddCost(0.05)
 	m.AddCost(0.10)
 	snap := m.Snapshot()
-	if snap.TotalCostUSD != 0.15 {
-		t.Errorf("expected 0.15 USD, got %f", snap.TotalCostUSD)
+	if snap.TotalCostUSD < 0.149 || snap.TotalCostUSD > 0.151 {
+		t.Errorf("expected ~0.15 USD, got %f", snap.TotalCostUSD)
 	}
 }

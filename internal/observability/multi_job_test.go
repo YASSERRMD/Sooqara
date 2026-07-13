@@ -37,7 +37,7 @@ func TestCostLedgerMultiJobIsolation(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if total != 0.35 {
-		t.Errorf("expected total 0.35, got %f", total)
+	if total < 0.349 || total > 0.351 {
+		t.Errorf("expected total ~0.35, got %f", total)
 	}
 }

@@ -37,5 +37,5 @@ func (pm PricingModel) CalculateVideoCost(count int) float64 {
 
 // roundToCents rounds a float to two decimal places.
 func roundToCents(v float64) float64 {
-	return float64(int((v+0.0005)*100)) / 100
+	return float64(int(v*100+0.5)) / 100
 }
