@@ -13,8 +13,3 @@ type PackageInfo struct {
 	Checksums   map[string]string
 	Description string
 }
-
-// Name returns the full package filename without extension.
-func (p PackageInfo) Name() string {
-	return p.Name
-}
