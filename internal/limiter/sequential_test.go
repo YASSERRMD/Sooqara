@@ -2,7 +2,6 @@ package limiter
 
 import (
 	"context"
-	"sync"
 	"testing"
 	"time"
 )
