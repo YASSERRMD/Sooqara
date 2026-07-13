@@ -1,6 +1,9 @@
 package journal
 
-import "crypto/sha256"
+import (
+	"crypto/sha256"
+	"fmt"
+)
 
 const maxDetailLen = 120
 
