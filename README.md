@@ -11,6 +11,12 @@ make build
 ./bin/sooqara
 ```
 
+## Building Releases
+
+```bash
+make release-version VERSION=v1.0.0 COMMIT=$(git rev-parse --short HEAD)
+```
+
 ## Licence
 
 Apache-2.0
