@@ -6,7 +6,6 @@ import (
 
 	"github.com/yasserrmd/sooqara/internal/journal"
 	"github.com/yasserrmd/sooqara/internal/limiter"
-	"github.com/yasserrmd/sooqara/internal/provider"
 )
 
 // Client implements provider.Provider for Agnes AI.
