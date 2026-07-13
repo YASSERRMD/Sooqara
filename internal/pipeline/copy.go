@@ -100,7 +100,7 @@ func runCopyWithRepair(ctx context.Context, p provider.Provider, req provider.Ch
 		if len(msg.ToolCalls) > 0 {
 			tc := msg.ToolCalls[0]
 			var cs CopySet
-			if err := jsonUnmarshal(tc.Function.Arguments, &cs); err != nil {
+			if err := json.Unmarshal(tc.Function.Arguments, &cs); err != nil {
 				return nil, fmt.Errorf("parse tool call: %w", err)
 			}
 			cs.Tone = tone
@@ -110,7 +110,7 @@ func runCopyWithRepair(ctx context.Context, p provider.Provider, req provider.Ch
 		// Fall back to JSON parsing
 		raw := stripFences(msg.Content)
 		var cs CopySet
-		if err := jsonUnmarshal([]byte(raw), &cs); err != nil {
+		if err := json.Unmarshal([]byte(raw), &cs); err != nil {
 			if attempt == 0 {
 				req = provider.ChatRequest{
 					Model: "agnes-2.0-flash",
