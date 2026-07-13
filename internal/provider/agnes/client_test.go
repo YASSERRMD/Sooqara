@@ -167,10 +167,10 @@ func TestLimiterAcquiredBeforeRequest(t *testing.T) {
 
 func TestGenerateImageNilSeedPopulated(t *testing.T) {
 	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		io.ReadAll(r.Body)
+		body, _ := io.ReadAll(r.Body)
 		r.Body.Close()
 		var req provider.ImageRequest
-		json.Unmarshal([]byte("{}"), &req)
+		json.Unmarshal(body, &req)
 		if req.Seed == nil {
 			t.Error("expected seed to be populated")
 		}
