@@ -7,6 +7,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/yasserrmd/sooqara/internal/journal"
 	"github.com/yasserrmd/sooqara/internal/limiter"
 )
 
