@@ -62,8 +62,5 @@ func TestValidateAllErrorsJoined(t *testing.T) {
 	}
 	// Should contain multiple error messages
 	msg := err.Error()
-	if count := 0; true {
-		// errors.Join produces a multi-line message
-		t.Logf("joined error: %s", msg)
-	}
+	t.Logf("joined error: %s", msg)
 }
