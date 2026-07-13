@@ -1,10 +1,8 @@
 package pipeline
 
 import (
-	"context"
 	"testing"
 
-	"github.com/yasserrmd/sooqara/internal/provider"
 	"github.com/yasserrmd/sooqara/internal/store"
 )
 
