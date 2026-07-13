@@ -1,14 +1,19 @@
 package agnes
 
 import (
+	"context"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 	"time"
 
-	"github.com/yasserrmd/sooqara/internal/journal"
 	"github.com/yasserrmd/sooqara/internal/limiter"
 )
+
+// stubJournal discards all records.
+type stubJournal struct{}
+
+func (s *stubJournal) Record(_ context.Context, _ journal.Activity) error { return nil }
 
 // newTestClient creates a Client backed by an httptest server.
 func newTestClient(t *testing.T, handler http.Handler) *Client {
@@ -17,15 +22,14 @@ func newTestClient(t *testing.T, handler http.Handler) *Client {
 	t.Cleanup(func() { ts.Close() })
 
 	cl := limiter.New(60, 3, &fakeClock{})
-	j := &journal.Journal{}
 
 	return &Client{
-		baseURL:   ts.URL,
-		pollURL:   ts.URL + "/poll",
-		apiKey:    "test-key",
+		baseURL:    ts.URL,
+		pollURL:    ts.URL + "/poll",
+		apiKey:     "test-key",
 		httpClient: ts.Client(),
-		limiter:   cl,
-		journal:   j,
+		limiter:    cl,
+		journal:    &stubJournal{},
 	}
 }
 
