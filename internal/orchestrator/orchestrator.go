@@ -159,7 +159,7 @@ type analyseStage struct{}
 func (s *analyseStage) Name() string          { return "analyse" }
 func (s *analyseStage) Timeout() time.Duration { return 120 * time.Second }
 func (s *analyseStage) Run(ctx context.Context, p provider.Provider, sto *store.Store, job *store.Job) error {
-	arts, err := sto.GetArtifactsByJob(sto.DB, job.ID)
+	arts, err := store.GetArtifactsByJob(sto.DB, job.ID)
 	if err != nil {
 		return err
 	}
