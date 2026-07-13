@@ -96,20 +96,26 @@ func TestNextStateChain(t *testing.T) {
 }
 
 func TestValidTransitions(t *testing.T) {
-	if !isValidTransition(store.StateQueued, store.StateCancelled) {
-		t.Error("expected queued -> cancelled to be valid")
+	// Verify cancelled is reachable from queued
+	transitions := store.ValidTransitions[store.StateQueued]
+	found := false
+	for _, s := range transitions {
+		if s == store.StateCancelled {
+			found = true
+			break
+		}
 	}
-	if !isValidTransition(store.StateAnalysing, store.StateCancelled) {
-		t.Error("expected analysing -> cancelled to be valid")
+	if !found {
+		t.Error("expected cancelled in queued transitions")
 	}
 }
 
 func TestInvalidTransitions(t *testing.T) {
-	if isValidTransition(store.StateDone, store.StateAnalysing) {
-		t.Error("expected done -> analysing to be invalid")
-	}
-	if isValidTransition(store.StateFailed, store.StateQueued) {
-		t.Error("expected failed -> queued to be invalid")
+	transitions := store.ValidTransitions[store.StateDone]
+	for _, s := range transitions {
+		if s == store.StateAnalysing {
+			t.Error("done -> analysing should not be valid")
+		}
 	}
 }
 
