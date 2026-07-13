@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/yasserrmd/sooqara/internal/journal"
-	"github.com/yasserrmd/sooqara/internal/limiter"
 	"github.com/yasserrmd/sooqara/internal/provider"
 	"github.com/yasserrmd/sooqara/internal/provider/agnes"
 	"github.com/yasserrmd/sooqara/internal/pipeline"
