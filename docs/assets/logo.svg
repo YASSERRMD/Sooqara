@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="160" height="160">
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="95" fill="#1c2f52"/>
+  
+  <!-- Shopping bag body -->
+  <rect x="55" y="70" width="90" height="80" rx="8" ry="8" fill="#c9a84c"/>
+  
+  <!-- Bag handle -->
+  <path d="M80 70 C80 50, 120 50, 120 70" stroke="#c9a84c" stroke-width="8" fill="none" stroke-linecap="round"/>
+  
+  <!-- Lightning bolt -->
+  <polygon points="105,75 90,105 100,105 95,130 115,98 104,98" fill="#1c2f52"/>
+  
+  <!-- Sparkle accents -->
+  <circle cx="70" cy="60" r="3" fill="#c9a84c"/>
+  <circle cx="130" cy="55" r="2" fill="#c9a84c"/>
+  <circle cx="135" cy="70" r="2.5" fill="#c9a84c"/>
+</svg>

@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="docs/assets/logo.png" alt="Sooqara" width="160" />
+  <img src="docs/assets/logo.svg" alt="Sooqara" width="160" />
 
   # Sooqara
 
@@ -10,23 +10,13 @@
   [![SQLite](https://img.shields.io/badge/DB-SQLite-c9a84c.svg)](internal/store)
   [![HTMX](https://img.shields.io/badge/UI-HTMX-1c2f52.svg)](internal/web)
 
-  > ⚠️ **Experimental Project** — Built entirely with AgnesCode using the Agnes 2.0 Flash model. For evaluation and learning purposes only.
-
 </div>
 
 ---
 
-Sooqara is an **experimental e-commerce listing factory** that automates the end-to-end creation of marketplace listings. Given a product image, it performs vision analysis, generates compliant copy, produces multiple image variants, creates async video assets, and exports everything in platform-ready formats — all orchestrated through a deterministic pipeline with rate limiting, cost tracking, and full audit trails.
+Sooqara is an **e-commerce listing factory** that automates the end-to-end creation of marketplace listings. Given a product image, it performs vision analysis, generates compliant copy, produces multiple image variants, creates async video assets, and exports everything in platform-ready formats — all orchestrated through a deterministic pipeline with rate limiting, cost tracking, and full audit trails.
 
 The pipeline is built around one idea: **automated listings need deterministic guardrails.** Every stage — from vision analysis through export — is bounded by token budgets, content constraints, and validation gates. No stage proceeds without passing its checks.
-
----
-
-## Experimental Notice
-
-> **This project is an experiment.** Sooqara was designed, coded, tested, and integrated entirely by **AgnesCode**, an AI coding agent powered by the **Agnes 2.0 Flash** model. It was built through a structured 15-phase development workflow (Phases 00–14), with each phase developed on a dedicated branch, containing 20+ atomic commits, and merged via pull request.
->
-> This project is intended for **evaluation, learning, and experimentation**. It is not production-ready. Use at your own discretion.
 
 ---
 
@@ -111,7 +101,7 @@ Sooqara is a modular Go monolith organized across twelve internal packages. The 
 
 ## Development workflow
 
-Sooqara was built using a strict **branch-per-phase, atomic-commits** workflow:
+Sooqara was built using a **branch-per-phase, atomic-commits** workflow:
 
 | Phase | Branch | Description |
 |---|---|---|
@@ -131,7 +121,7 @@ Sooqara was built using a strict **branch-per-phase, atomic-commits** workflow:
 | 13 | `phase-13` | Packaging: version injection, build flags, tarball packing, checksums |
 | 14 | `phase-14` | Final release: manifest I/O, environment gate, full pipeline integration |
 
-Each phase was developed on its own branch with **20+ atomic commits**, pushed to the remote, and merged to `main` via pull request. All phases pass `go vet` and `go test -race`.
+Each phase was developed on its own branch, pushed to the remote, and merged to `main` via pull request. All phases pass `go vet` and `go test -race`.
 
 ---
 
@@ -286,7 +276,3 @@ Exports use slugified column headers, proper CSV quoting, and platform-specific 
 ## License
 
 Apache 2.0 — see [`LICENSE`](LICENSE).
-
----
-
-*Built with AgnesCode using the Agnes 2.0 Flash model.*
