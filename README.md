@@ -10,6 +10,8 @@
   [![SQLite](https://img.shields.io/badge/DB-SQLite-c9a84c.svg)](internal/store)
   [![HTMX](https://img.shields.io/badge/UI-HTMX-1c2f52.svg)](internal/web)
 
+  > ⚠️ **Experimental Project** — Built entirely with AgnesCode using the Agnes 2.0 Flash model. For evaluation and learning purposes only.
+
 </div>
 
 ---
@@ -101,7 +103,7 @@ Sooqara is a modular Go monolith organized across twelve internal packages. The 
 
 ## Development workflow
 
-Sooqara was built using a **branch-per-phase, atomic-commits** workflow:
+Sooqara was built using a **branch-per-phase** workflow:
 
 | Phase | Branch | Description |
 |---|---|---|
